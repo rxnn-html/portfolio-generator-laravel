@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Make Tailwind's "dark:" classes work when <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+:root {
+  --page-bg: #f9fafb;
+  --page-fg: #111827;
+}
+
+body {
+  background-color: var(--page-bg);
+  color: var(--page-fg);
+  overflow-wrap: anywhere;
+}
+
+img { max-width: 100%; }
+
+/* ---------- DARK MODE ---------- */
+html.dark {
+  color-scheme: dark;
+  --page-bg: #0b1120;
+  --page-fg: #e5e7eb;
+
+  --color-gray-50: #0f1626;
+  --color-gray-100: #1b2438;
+  --color-gray-200: #263149;
+  --color-gray-300: #334155;
+  --color-gray-400: #64748b;
+  --color-gray-500: #94a3b8;
+  --color-gray-600: #a9b4c7;
+  --color-gray-700: #cbd5e1;
+  --color-gray-800: #e2e8f0;
+  --color-gray-900: #f1f5f9;
+
+  --color-red-50: rgb(239 68 68 / 0.12);
+  --color-red-200: rgb(239 68 68 / 0.4);
+  --color-red-700: #fca5a5;
+  --color-red-800: #fecaca;
+}
+
+/* ".theme-fixed" marks areas with their own colors (portfolio templates, mini previews) */
+html.dark .bg-white:not(.theme-fixed, .theme-fixed *) {
+  background-color: #131a2b;
+}
+html.dark .text-indigo-700:not(.theme-fixed, .theme-fixed *) {
+  color: #a5b4fc;
+}
+html.dark .bg-indigo-50:not(.theme-fixed, .theme-fixed *) {
+  background-color: rgb(99 102 241 / 0.15);
+}
+
+/* ---------- PRINT / SAVE AS PDF ---------- */
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+@media print {
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body, html.dark body {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  /* Dark template: paint the whole page (including margins) dark */
+  html:has(.print-area[data-theme="creative"]),
+  html:has(.print-area[data-theme="creative"]) body {
+    background: #020617;
+  }
+
+  .print-area nav { display: none !important; }
+  .print-area * { box-shadow: none !important; }
+  .print-area section, .print-area article, .print-area li { break-inside: avoid; }
+  .print-area h1, .print-area h2, .print-area h3 { break-after: avoid; }
+}

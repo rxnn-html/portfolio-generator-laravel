@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Portfolio Generator')</title>
+
+    {{-- Runs BEFORE the page paints, so dark mode has no white flash. --}}
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (stored === 'dark' || (!stored && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('head')
+</head>
+<body class="min-h-screen antialiased">
+    @include('partials.navbar')
+
+    <main class="mx-auto max-w-6xl px-4 py-8 print:max-w-none print:p-0">
+        @yield('content')
+    </main>
+
+    <footer class="mx-auto max-w-6xl px-4 py-8 text-center text-sm text-slate-500 dark:text-slate-400 print:hidden">
+        <p>Portfolio Generator &middot; Built with Laravel, Blade, Tailwind CSS &amp; Supabase</p>
+        <p class="mt-1">No copyright &middot; Free to use and share</p>
+    </footer>
+</body>
+</html>
