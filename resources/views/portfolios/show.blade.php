@@ -81,15 +81,11 @@
                         <a href="{{ route('portfolios.edit', $portfolio) }}"
                            class="inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Edit Portfolio</a>
 
-                        <button type="button" class="{{ $btn }}" x-data="{ copied: false }"
-                                x-on:click="navigator.clipboard.writeText(location.origin + location.pathname).then(() => { copied = true; setTimeout(() => copied = false, 2000) })">
-                            <span x-text="copied ? 'Copied!' : 'Copy link'">Copy link</span>
-                        </button>
+                        {{-- Plain JavaScript: works even if Alpine is not loaded --}}
+                        <button type="button" class="{{ $btn }}"
+                                onclick="navigator.clipboard.writeText(location.origin + location.pathname); this.textContent = 'Copied!';">Copy link</button>
 
-                        <button type="button" class="{{ $btn }}" x-data="{ t: {{ Js::from($portfolio->full_name) }} }"
-                                x-on:click="var o = document.title; document.title = t + ' - Portfolio'; window.print(); document.title = o">
-                            Print / Save as PDF
-                        </button>
+                        <button type="button" class="{{ $btn }}" onclick="window.print()">Print / Save as PDF</button>
                     </div>
                 </div>
             </div>
@@ -122,7 +118,8 @@
             @include('portfolio-templates.'.$template, ['portfolio' => $portfolio])
         </div>
     </div>
-</div>
+
+    {{-- DELETE (hidden when printing) --}}
     <div class="mt-8 flex flex-col gap-3 rounded-2xl border border-red-200 p-5 sm:flex-row sm:items-center sm:justify-between print:hidden">
         <div>
             <p class="font-semibold text-gray-900">Delete this portfolio</p>
@@ -133,4 +130,5 @@
                 class="inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-xl border border-red-300 px-4 text-sm font-semibold text-red-600 hover:bg-red-50">Delete Portfolio</button>
     </div>
     <x-delete-dialog />
+</div>
 @endsection
