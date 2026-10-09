@@ -9,7 +9,7 @@
 <header class="border-b border-slate-200 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-slate-950/70 print:hidden">
     <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3">
         <a href="{{ url('/') }}" class="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
-            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-indigo-600 to-fuchsia-500 text-sm font-extrabold text-white">P</span>
+            <img src="{{ asset('favicon.svg') }}" alt="" class="h-8 w-8">
             Portfolio Generator
         </a>
 
