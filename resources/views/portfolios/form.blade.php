@@ -9,7 +9,7 @@
     // old(...) = what the user typed before a validation error; otherwise the saved or blank data
     $state = [
         'f' => [
-            'full_name'      => old('full_name', $portfolio?->full_name ?? ''),
+            'full_name'      => old('full_name', $portfolio?->full_name ?? \Illuminate\Support\Str::limit(is_string(request('name')) ? request('name') : '', 100, '')),
             'email'          => old('email', $portfolio?->email ?? ''),
             'contact_number' => old('contact_number', $portfolio?->contact_number ?? ''),
             'address'        => old('address', $portfolio?->address ?? ''),
