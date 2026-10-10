@@ -19,7 +19,7 @@
     $percent = (int) round((7 - count($missing)) / 7 * 100);
     $updated = $portfolio->updated_at?->timezone('Asia/Manila')->format('M j, Y');
 
-    $btn = 'inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50';
+    $btn = 'inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-md hover:shadow-indigo-500/30 active:translate-y-0';
 @endphp
 
 <x-toast :notice="request('notice')" />
@@ -45,7 +45,7 @@
                     <div class="min-w-0 pb-1">
                         <h1 class="truncate text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{{ $portfolio->full_name }}</h1>
                         <div class="mt-1.5 flex flex-wrap gap-2">
-                            <span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium capitalize text-indigo-700">{{ $template }} template</span>
+                            <span class="rounded-full bg-indigo-500/20 px-2.5 py-0.5 text-xs font-medium capitalize text-indigo-700 dark:text-indigo-200">{{ $template }} template</span>
                             @if ($updated)
                                 <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">Updated {{ $updated }}</span>
                             @endif
@@ -78,8 +78,7 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2">
-                        <a href="{{ route('portfolios.edit', $portfolio) }}"
-                           class="inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Edit Portfolio</a>
+                        <a href="{{ route('portfolios.edit', $portfolio) }}" class="{{ $btn }}">Edit Portfolio</a>
 
                         {{-- Plain JavaScript: works even if Alpine is not loaded --}}
                         <button type="button" class="{{ $btn }}"
