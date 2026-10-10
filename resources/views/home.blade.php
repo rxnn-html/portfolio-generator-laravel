@@ -26,10 +26,10 @@
     ];
 @endphp
 
-<div class="space-y-20 sm:space-y-28" data-reveal-group>
+<div class="space-y-20 sm:space-y-28">
 
     {{-- ================= HERO ================= --}}
-    <section class="relative isolate overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-16 text-white sm:px-12 sm:py-24">
+    <section class="theme-fixed relative isolate overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-16 text-white sm:px-12 sm:py-24">
         {{-- Glow blobs and wave lines (decoration only) --}}
         <div aria-hidden="true" class="pointer-events-none absolute -left-24 -top-24 -z-10 h-96 w-96 rounded-full bg-indigo-600/40 blur-[110px] motion-safe:animate-drift"></div>
         <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 right-0 -z-10 h-96 w-96 rounded-full bg-fuchsia-600/30 blur-[110px] motion-safe:animate-drift-slow"></div>
@@ -75,7 +75,7 @@
                         Create Portfolio &rarr;
                     </a>
                     <a href="#how-it-works"
-                       class="inline-flex min-h-12 items-center justify-center rounded-xl bg-white px-7 text-base font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:bg-slate-100">
+                       class="inline-flex min-h-12 items-center justify-center rounded-xl bg-slate-50 px-7 text-base font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:bg-white">
                         See how it works
                     </a>
                 </div>
