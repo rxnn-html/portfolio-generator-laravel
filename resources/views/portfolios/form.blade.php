@@ -275,7 +275,7 @@
         </div>
 
         {{-- ============ STICKY SAVE BAR ============ --}}
-        <div class="sticky bottom-4 z-20 mt-8">
+        <div class="sticky bottom-20 z-20 mt-8 sm:bottom-4">
             <div class="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-lg sm:flex-row sm:items-center sm:justify-between">
                 <p class="hidden items-center gap-2 pl-2 text-sm text-gray-500 sm:flex">
                     <span class="font-bold text-indigo-600 dark:text-indigo-300" x-text="percent + '%'"></span> complete &middot;

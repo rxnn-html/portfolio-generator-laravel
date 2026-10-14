@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>@yield('title', 'Portfolio Generator')</title>
 
     {{-- Runs BEFORE the page paints, so dark mode has no white flash. --}}
@@ -25,7 +25,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="min-h-screen antialiased">
+<body class="min-h-screen pb-20 antialiased sm:pb-0 print:pb-0">
     @include('partials.navbar')
 
     <main class="mx-auto max-w-6xl px-4 py-8 print:max-w-none print:p-0">
