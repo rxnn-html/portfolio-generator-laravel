@@ -12,7 +12,7 @@ class TemplateController extends Controller
     public function index(Request $request)
     {
         $id = $request->query('id');
-        $portfolio = (is_string($id) && Str::isUuid($id)) ? Portfolio::find($id) : null;
+        $portfolio = (is_string($id) && ctype_digit($id)) ? Portfolio::find($id) : null;
 
         return view('templates.index', ['portfolio' => $portfolio]);
     }

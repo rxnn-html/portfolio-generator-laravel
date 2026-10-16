@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Portfolio extends Model
 {
-    use HasUuids; // ids are UUIDs, not 1, 2, 3
-
     protected $table = 'portfolios';
 
     // Only these columns can be filled from a form (blocks mass-assignment tricks)
