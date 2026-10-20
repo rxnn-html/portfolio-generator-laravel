@@ -38,3 +38,4 @@ Route::middleware('auth')->group(function () {
 
 
 Route::view('/privacy', 'privacy')->name('privacy');
+Route::view('/terms', 'terms')->name('terms');
