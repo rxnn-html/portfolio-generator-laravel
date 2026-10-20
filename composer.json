@@ -10,7 +10,6 @@
         "ext-pdo_pgsql": "*",
         "ext-pgsql": "*",
         "laravel/framework": "^13.17",
-        "laravel/socialite": "^5.0",
         "laravel/tinker": "^3.0"
     },
     "require-dev": {

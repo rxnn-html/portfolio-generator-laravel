@@ -1,26 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PortfolioPageController;
 use App\Http\Controllers\TemplateController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
-
-// Authentication (Google OAuth)
-Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('login');
-Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
-Route::post('/logout', function (Request $request) {
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect('/');
-})->name('logout');
 
 // Create and edit. whereUuid() makes a bad id a clean 404 instead of a database error.
 Route::get('/create', [PortfolioController::class, 'create'])->name('portfolios.create');
