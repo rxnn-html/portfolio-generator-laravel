@@ -28,6 +28,7 @@
         </a>
 
         <p class="mt-5 text-xs leading-relaxed text-slate-400">We only receive your name, email, and profile picture. We never see your Google password.</p>
+            <p class="mt-4 text-xs text-slate-400">By continuing, you agree to our <a href="{{ url('/terms') }}" class="text-violet-400 underline hover:text-violet-300">Terms of Service</a>.</p>
     </div>
 </div>
 @endsection
