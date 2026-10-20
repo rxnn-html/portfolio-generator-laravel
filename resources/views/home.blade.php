@@ -376,10 +376,10 @@
     {{-- ================= FAQ ================= --}}
     @php
         $qa = [
-            ['q' => 'Do I need an account?', 'a' => 'Nope! There is no sign-up. Open the form, fill it in, and your portfolio is saved online.'],
+            ['q' => 'Do I need an account?', 'a' => 'Yes, but it takes one click. Sign in with your Google account, then fill in the form. There is no password to create or remember.'],
             ['q' => 'Can I edit my portfolio later?', 'a' => 'Yes. Open My Portfolios and press Edit. You can also switch the template at any time without retyping anything.'],
             ['q' => 'Can I download it as a PDF?', 'a' => 'Yes. Open your portfolio and press Print / Save as PDF. For the dark Creative template, tick "Background graphics" in the print window so the colours are included.'],
-            ['q' => 'Is my information private?', 'a' => 'Honest answer: there are no accounts yet, so anyone who visits My Portfolios can see saved portfolios. Please do not enter anything you want to keep private.'],
+            ['q' => 'Is my information private?', 'a' => 'Only you can edit or delete your portfolios. Anyone with the link to a portfolio can view it, so do not enter anything you want to keep private.'],
             ['q' => 'Does it work on my phone?', 'a' => 'Yes! Every page and all three templates adapt to phones, tablets, and desktops.'],
         ];
     @endphp
