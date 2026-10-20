@@ -35,3 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/manage', [ManageController::class, 'index'])->name('manage');
 });
 \Illuminate\Support\Facades\Route::view('/privacy', 'privacy')->name('privacy');
+
+
+Route::view('/privacy', 'privacy')->name('privacy');
