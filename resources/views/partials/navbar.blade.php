@@ -55,14 +55,14 @@
                             <p class="truncate text-xs text-slate-500 dark:text-slate-400">{{ $me->email }}</p>
                         </div>
                         <a href="{{ url('/manage') }}" class="block rounded-xl px-3 py-2.5 text-sm font-semibold {{ $off }}">My Portfolios</a>
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ \Illuminate\Support\Facades\Route::has('logout') ? route('logout') : url('/logout') }}">
                             @csrf
                             <button type="submit" class="block w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-500/10">Log out</button>
                         </form>
                     </div>
                 </details>
             @else
-                <a href="{{ route('login') }}" class="inline-flex min-h-10 items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500">Sign in</a>
+                <a href="{{ \Illuminate\Support\Facades\Route::has('login') ? route('login') : url('/') }}" class="inline-flex min-h-10 items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500">Sign in</a>
             @endauth
         </div>
     </nav>
