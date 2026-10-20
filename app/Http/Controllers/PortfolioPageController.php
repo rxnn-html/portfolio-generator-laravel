@@ -6,10 +6,9 @@ use App\Models\Portfolio;
 
 class PortfolioPageController extends Controller
 {
-    // The preview page: /portfolio/{id}
+    // Public: anyone with the link can view. The view hides edit tools unless you own it.
     public function show(Portfolio $portfolio)
     {
-        // Load all related rows in the order they were saved
         $portfolio->load([
             'education'   => fn ($q) => $q->orderBy('id'),
             'skills'      => fn ($q) => $q->orderBy('id'),
@@ -18,6 +17,8 @@ class PortfolioPageController extends Controller
             'socialLinks' => fn ($q) => $q->orderBy('id'),
         ]);
 
-        return view('portfolios.show', ['portfolio' => $portfolio]);
+        $isOwner = auth()->check() && $portfolio->user_id !== null && auth()->id() === $portfolio->user_id;
+
+        return view('portfolios.show', ['portfolio' => $portfolio, 'isOwner' => $isOwner]);
     }
 }

@@ -6,20 +6,20 @@ use App\Http\Requests\PortfolioRequest;
 use App\Models\Portfolio;
 use App\Services\SupabaseStorage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Throwable;
 
 class PortfolioController extends Controller
 {
-    // Show the empty form
     public function create()
     {
         return view('portfolios.form', ['portfolio' => null, 'form' => $this->formData(null)]);
     }
 
-    // Save a NEW portfolio
+    // Saves a NEW portfolio that belongs to the signed-in user
     public function store(PortfolioRequest $request, SupabaseStorage $storage)
     {
-        $data = $request->validated(); // only data that passed validation
+        $data = $request->validated();
         $imageUrl = null;
 
         try {
@@ -27,19 +27,19 @@ class PortfolioController extends Controller
                 $imageUrl = $storage->upload($request->file('image'));
             }
 
-            // A real database transaction: everything is saved, or nothing is
             $portfolio = DB::transaction(function () use ($data, $imageUrl) {
-                $portfolio = Portfolio::create($this->mainFields($data) + [
+                // Through the relationship, so user_id is always the logged-in user
+                $portfolio = auth()->user()->portfolios()->create($this->mainFields($data) + [
                     'profile_image' => $imageUrl,
-                    'template' => 'simple', // the user picks the real one next
+                    'template' => 'simple',
                 ]);
                 $this->saveChildren($portfolio, $data);
 
                 return $portfolio;
             });
         } catch (Throwable $e) {
-            report($e); // details go to storage/logs/laravel.log, not to the user
-            $storage->delete($imageUrl); // undo the upload
+            report($e);
+            $storage->delete($imageUrl);
 
             return back()->withInput()->withErrors(['save' => 'Your portfolio could not be saved. Please try again.']);
         }
@@ -47,17 +47,19 @@ class PortfolioController extends Controller
         return redirect('/templates?id='.$portfolio->id);
     }
 
-    // Show the form filled with saved data
     public function edit(Portfolio $portfolio)
     {
+        Gate::authorize('update', $portfolio); // 403 if it is not yours
+
         $portfolio->load('education', 'skills', 'projects', 'experiences', 'socialLinks');
 
         return view('portfolios.form', ['portfolio' => $portfolio, 'form' => $this->formData($portfolio)]);
     }
 
-    // Save changes to an EXISTING portfolio (no duplicate is created)
     public function update(PortfolioRequest $request, Portfolio $portfolio, SupabaseStorage $storage)
     {
+        Gate::authorize('update', $portfolio); // 403 if it is not yours
+
         $data = $request->validated();
         $oldImage = $portfolio->profile_image;
         $newImage = $oldImage;
@@ -71,7 +73,6 @@ class PortfolioController extends Controller
             }
 
             DB::transaction(function () use ($portfolio, $data, $newImage) {
-                // The template is NOT touched here
                 $portfolio->update($this->mainFields($data) + ['profile_image' => $newImage]);
                 $this->saveChildren($portfolio, $data, replace: true);
             });
@@ -82,15 +83,12 @@ class PortfolioController extends Controller
             return back()->withInput()->withErrors(['save' => 'Your changes could not be saved. Please try again.']);
         }
 
-        // Success: remove the OLD picture file if it was replaced or removed
         if ($oldImage && $newImage !== $oldImage) {
             $storage->delete($oldImage);
         }
 
         return redirect('/portfolio/'.$portfolio->id.'?notice=saved');
     }
-
-    /* ---------------------------------------------------------- helpers */
 
     private function mainFields(array $data): array
     {
@@ -103,11 +101,9 @@ class PortfolioController extends Controller
         ];
     }
 
-    // Education, skills, projects, experiences, social links
     private function saveChildren(Portfolio $portfolio, array $data, bool $replace = false): void
     {
         if ($replace) {
-            // Editing a list is simplest as: delete the old rows, insert the new ones
             $portfolio->education()->delete();
             $portfolio->skills()->delete();
             $portfolio->projects()->delete();
@@ -124,7 +120,6 @@ class PortfolioController extends Controller
         $portfolio->socialLinks()->createMany($data['social_links'] ?? []);
     }
 
-    // Saved data -> plain arrays for the form (one blank row when a list is empty)
     private function formData(?Portfolio $p): array
     {
         $rows = fn ($collection, array $keys) => ($collection && $collection->isNotEmpty())
